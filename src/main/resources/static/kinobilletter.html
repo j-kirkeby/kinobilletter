@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kinobilletter</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="code.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Bestilling av kinobilletter</h1>
+
+    <!-- Input form -->
+    <form>
+        <label for="film">Velg film:</label>
+        <select id="film">
+            <option value="" selected>Velg film her</option>
+            <option value="Madame Web">Madame Web</option>
+            <option value="Wonka">Wonka</option>
+            <option value="The Beekeper">The Beekeeper</option>
+        </select>
+        <div id="error-film"></div>
+
+        <label for="antall">Antall</label>
+        <input type="text" id="antall" pattern="[0-9]{1,3}">
+        <div id="error-antall"></div>
+
+        <table>
+            <tr>
+                <td><label for="fornavn">Fornavn</label></td>
+                <td><input type="text" id="fornavn" pattern="[a-zA-ZæøåÆØÅ]{1,}"></td>
+                <td><div id="error-fornavn"></div></td>
+            </tr>
+            <tr>
+                <td><label for="etternavn">Etternavn</label></td>
+                <td><input type="text" id="etternavn" pattern="[a-zA-ZæøåÆØÅ]{1,}"></td>
+                <td><div id="error-etternavn"></div></td>
+            </tr>
+            <tr>
+                <td><label for="telefonnr">Telefonnr</label></td>
+                <td><input type="text" id="telefonnr" pattern="[0-9]{8}"></td>
+                <td><div id="error-telefonnr"></div></td>
+            </tr>
+            <tr>
+                <td><label for="epost">Epost</label></td>
+                <td><input type="text" id="epost" pattern="^[^@]+@[^@]+\.[^.]{1,}$"></td>
+                <td><div id="error-epost"></div></td>
+            </tr>
+        </table>
+
+        <button id="kjop">Kjøp billett</button>
+    </form>
+    <hr>
+
+    <!-- Visningsfelt-->
+    <h2>Alle billetter</h2>
+    <table id="billetter">
+        <tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>
+    </table>
+    <hr>
+
+    <!-- Slett billetter-->
+    <button id="slett">Slett alle billetter</button>
+</body>
+</html>
