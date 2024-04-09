@@ -1,11 +1,6 @@
-let billetter = [];
-
 /* Kjøp av billetter */
 $(function () {
-    $("#kjop").click(function (event) {
-        // Stopper <form> fra a resette, etter submit
-        event.preventDefault();
-
+    $("#kjop").click(function () {
         const innFilm = $("#film").val();
         const innAntall = $("#antall").val();
         const innFornavn = $("#fornavn").val();
@@ -16,7 +11,7 @@ $(function () {
 
         /* Hvis input er korrekt, legg til i array og oppdater tabell */
         if (sjekkInn(innFilm, innAntall, innFornavn, innEtternavn, innTelefonnr, innEpost)) {
-            const bestilling = {
+            const billett = {
                 film: innFilm,
                 antall: innAntall,
                 fornavn: innFornavn,
@@ -26,10 +21,9 @@ $(function () {
             }
 
             /* Legg til i array */
-            billetter.push(bestilling);
-
-            /* Legg til i tabell (Alle bestillinger) */
-            skrivTabell(bestilling);
+            $.post("/lagre", billett, function (){
+                skrivTabell();
+            });
 
             /* Reset alle felter (input og error) */
             resetInputs();
@@ -40,12 +34,30 @@ $(function () {
     /* Slett alle billetter */
     $("#slett").click(function () {
         // Tøm array
-        billetter = [];
+        $.get("/slettAlle");
 
         // Tilbakestill tabell
         $("#billetter").html("<tr><th>Film</th><th>Antall</th><th>Fornavn</th>" +
             "<th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>");
     });
+
+    function skrivTabell() {
+        $.get("/hentAlle", function(billetter){
+            let ut = "<tr><th>Film</th><th>Antall</th><th>Fornavn</th>" +
+                "<th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>";
+            for (const billett of billetter){
+                ut += "<tr>";
+                ut += "<td>" + billett.film + "</td>";
+                ut += "<td>" + billett.antall + "</td>";
+                ut += "<td>" + billett.fornavn + "</td>";
+                ut += "<td>" + billett.etternavn + "</td>";
+                ut += "<td>" + billett.telefonnr + "</td>";
+                ut += "<td>" + billett.epost + "</td>";
+                ut += "</tr>";
+            }
+            $("#billetter").html(ut);
+        });
+    }
 });
 
 
@@ -112,16 +124,3 @@ function sjekkInn(film, antall, fornavn, etternavn, telefonnr, epost) {
     return fullstendig;
 }
 
-function skrivTabell(bestilling) {
-    let ut = "";
-    ut += "<tr>";
-    ut += "<td>" + bestilling.film + "</td>";
-    ut += "<td>" + bestilling.antall + "</td>";
-    ut += "<td>" + bestilling.fornavn + "</td>";
-    ut += "<td>" + bestilling.etternavn + "</td>";
-    ut += "<td>" + bestilling.telefonnr + "</td>";
-    ut += "<td>" + bestilling.epost + "</td>";
-    ut += "</tr>";
-
-    $("#billetter").append(ut);
-}

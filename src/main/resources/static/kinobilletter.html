@@ -6,12 +6,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="code.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
 </head>
 <body>
     <h1>Bestilling av kinobilletter</h1>
 
     <!-- Input form -->
-    <form>
+    <div class="form-group">
         <label for="film">Velg film:</label>
         <select id="film">
             <option value="" selected>Velg film her</option>
@@ -48,18 +49,18 @@
             </tr>
         </table>
 
-        <button id="kjop">Kjøp billett</button>
-    </form>
+        <button class="btn btn-primary" id="kjop">Kjøp billett</button>
+    </div>
     <hr>
 
     <!-- Visningsfelt-->
     <h2>Alle billetter</h2>
-    <table id="billetter">
+    <table class="table" id="billetter">
         <tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>
     </table>
     <hr>
 
     <!-- Slett billetter-->
-    <button id="slett">Slett alle billetter</button>
+    <button class="btn btn-danger" id="slett">Slett alle billetter</button>
 </body>
 </html>
