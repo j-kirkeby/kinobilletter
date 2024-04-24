@@ -1,27 +1,30 @@
 package com.example.kinobilletter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 import java.util.ArrayList;
 
 @RestController
 public class KinoController {
-    public final ArrayList<Billett> alleBilletter = new ArrayList<>();
+    @Autowired
+    KinoRepository rep;
 
     @PostMapping("/lagre")
     public void lagreBillett(Billett innBillett){
-        alleBilletter.add(innBillett);
+        rep.lagreBillett(innBillett);
     }
 
     @GetMapping("/hentAlle")
-    public ArrayList<Billett> hentAlle(){
-        return alleBilletter;
+    public List<Billett> hentAlle(){
+        return rep.hentAlleBilletter();
     }
 
     @GetMapping("/slettAlle")
     public void slettAlle(){
-        alleBilletter.clear();
+        rep.slettAlleBilletter();
     }
 }
